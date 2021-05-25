@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Size deviceSize = MediaQuery.of(context).size;
     final ButtonStyle signInButtonStyle = TextButton.styleFrom(
       backgroundColor: AppColors.ColorBlack,
-      padding: EdgeInsets.symmetric(vertical: 12.5),
+      padding: EdgeInsets.symmetric(vertical: 15.0),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
       ),
@@ -133,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontFamily: 'Poppins',
                                   fontSize: 17.5,
                                   fontWeight: FontWeight.w500,
+                                  color: AppColors.ColorBlack,
                                 ),
                               ),
                               Container(
@@ -160,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Container(
+                                width: double.infinity,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,6 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.w700,
                                           letterSpacing: 0.25,
+                                          color: AppColors.ColorBlack,
                                         ),
                                       ),
                                     ),
@@ -200,6 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Icon(
                                         Icons.arrow_forward_rounded,
                                         size: 30.0,
+                                        color: AppColors.ColorBlack,
                                       ),
                                     ),
                                   ],
@@ -208,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.grey,
+                            color: AppColors.ColorWhite,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(50.0),
                             ),
@@ -238,7 +242,7 @@ class ImageView extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
-              AppColors.ColorBlack.withOpacity(0.25), BlendMode.dstATop),
+              AppColors.ColorBlack.withOpacity(0.3), BlendMode.dstATop),
           image: new AssetImage(imgPath),
           fit: BoxFit.cover,
         ),
