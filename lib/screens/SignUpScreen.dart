@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:signin_firebase/authentication/AuthenticationService.dart';
 import 'package:signin_firebase/screens/SignInScreen.dart';
 import 'package:signin_firebase/styles/Colors.dart';
 
@@ -11,6 +13,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _key = GlobalKey<FormState>();
+
+  final AuthenticationService _auth = AuthenticationService();
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -212,6 +216,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Password cannot be empty';
+                              } else if (value.length < 6) {
+                                return 'Password cannot be less than 6 character';
                               } else {
                                 return null;
                               }
@@ -262,7 +268,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         style: signUpButtonStyle,
                         onPressed: () {
-                          if (_key.currentState.validate()) {}
+                          if (_key.currentState.validate()) {
+                            createUser();
+                            _nameController.clear();
+                            _emailController.clear();
+                            _phoneController.clear();
+                            _passwordController.clear();
+                            Fluttertoast.showToast(
+                              msg: "Sign Up Successful",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: AppColors.ColorWhite,
+                              textColor: AppColors.ColorBlack,
+                              fontSize: 15.0,
+                            );
+                          }
                         },
                       ),
                     ),
@@ -314,5 +335,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void createUser() async {
+    dynamic result =
+        await _auth.createUser(_emailController.text, _passwordController.text);
+    if (result == null) {
+      print('Invalid data');
+    } else {
+      print(result.toString());
+    }
   }
 }

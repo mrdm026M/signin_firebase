@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:signin_firebase/authentication/AuthenticationService.dart';
 import 'package:signin_firebase/screens/HomeScreen.dart';
 import 'package:signin_firebase/styles/Colors.dart';
 
@@ -12,6 +14,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _key = GlobalKey<FormState>();
 
+  final AuthenticationService _auth = AuthenticationService();
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -19,7 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
 
-    final ButtonStyle signUpButtonStyle = TextButton.styleFrom(
+    final ButtonStyle signInButtonStyle = TextButton.styleFrom(
       backgroundColor: AppColors.ColorWhite,
       padding: EdgeInsets.symmetric(vertical: 15.0),
       shape: const RoundedRectangleBorder(
@@ -204,9 +208,22 @@ class _SignInScreenState extends State<SignInScreen> {
                             letterSpacing: 0.5,
                           ),
                         ),
-                        style: signUpButtonStyle,
+                        style: signInButtonStyle,
                         onPressed: () {
-                          if (_key.currentState.validate()) {}
+                          if (_key.currentState.validate()) {
+                            signInUser();
+                            _emailController.clear();
+                            _passwordController.clear();
+                            Fluttertoast.showToast(
+                              msg: "Sign In Successful",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: AppColors.ColorWhite,
+                              textColor: AppColors.ColorBlack,
+                              fontSize: 15.0,
+                            );
+                          }
                         },
                       ),
                     ),
@@ -233,5 +250,15 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  void signInUser() async {
+    dynamic result =
+        await _auth.loginUser(_emailController.text, _passwordController.text);
+    if (result == null) {
+      print('Sign In error!');
+    } else {
+      print(result.toString());
+    }
   }
 }
