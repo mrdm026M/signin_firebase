@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  height: 275.0,
+                  height: deviceSize.height / 3,
                   // color: Colors.red,
                   child: Column(
                     children: [
